@@ -1,6 +1,6 @@
 // Load environment variables
 //require('dotenv').config();
-
+import logger from './middleswares/logger';
 // Import dependencies
 const express = require('express');
 const userRoutes = require('./routes/userRoutes');
@@ -10,7 +10,7 @@ const app = express();
 
 // Middleware to parse JSON body
 app.use(express.json());
-
+app.use(logger); // Use the logger middleware
 // Register routes
 app.use('/api/users', userRoutes);
 
