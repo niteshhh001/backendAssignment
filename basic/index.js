@@ -4,15 +4,19 @@ import logger from './middleswares/logger';
 // Import dependencies
 const express = require('express');
 const userRoutes = require('./routes/userRoutes');
+const uploadRoutes = require('./routes/uploadRoutes');
 
 // Initialize express app
 const app = express();
 
+app.use('/uploads', express.static('uploads'));
 // Middleware to parse JSON body
 app.use(express.json());
 app.use(logger); // Use the logger middleware
 // Register routes
 app.use('/api/users', userRoutes);
+app.use('/api/upload', uploadRoutes);
+
 
 // Default route (optional)
 app.get('/', (req, res) => {
