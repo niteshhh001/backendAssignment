@@ -5,7 +5,7 @@ import logger from './middleswares/logger';
 const express = require('express');
 const userRoutes = require('./routes/userRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
-
+const todoRoutes = require('./routes/todoRoutes');
 // Initialize express app
 const app = express();
 
@@ -16,7 +16,9 @@ app.use(logger); // Use the logger middleware
 // Register routes
 app.use('/api/users', userRoutes);
 app.use('/api/upload', uploadRoutes);
+// todo routes
 
+app.use('/api/todos', todoRoutes);
 
 // Default route (optional)
 app.get('/', (req, res) => {
