@@ -1,4 +1,4 @@
-// Load environment variables
+ /* // Load environment variables
 //require('dotenv').config();
 import logger from './middleswares/logger';
 // Import dependencies
@@ -29,4 +29,41 @@ app.get('/', (req, res) => {
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
+}); */
+const express = require("express");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+
+dotenv.config();
+
+const app = express();
+
+//  Middleware (must be before routes)
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+//  Import routes
+const userRoutes = require("./routes/userRoutes");
+const calculatorRoutes = require("./routes/calculatorRoutes");
+
+//  Use routes
+app.use("/api/users", userRoutes);
+app.use("/calculate", calculatorRoutes);
+
+//  MongoDB connection
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => console.log("MongoDB Connected"))
+.catch(err => console.error(err));
+
+//  Root route
+app.get("/", (req, res) => {
+  res.send("Hello World");
+});
+
+// Server
+app.listen(3000, () => {
+  console.log("Server is running on port 3000");
 });
